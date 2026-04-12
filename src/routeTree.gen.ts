@@ -14,6 +14,7 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VerbsQuizRouteImport } from './routes/verbs.quiz'
+import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as ApiGraphqlRouteImport } from './routes/api/graphql'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
@@ -42,6 +43,11 @@ const VerbsQuizRoute = VerbsQuizRouteImport.update({
   path: '/quiz',
   getParentRoute: () => VerbsRoute,
 } as any)
+const ApiHealthRoute = ApiHealthRouteImport.update({
+  id: '/api/health',
+  path: '/api/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiGraphqlRoute = ApiGraphqlRouteImport.update({
   id: '/api/graphql',
   path: '/api/graphql',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/verbs': typeof VerbsRouteWithChildren
   '/api/graphql': typeof ApiGraphqlRoute
+  '/api/health': typeof ApiHealthRoute
   '/verbs/quiz': typeof VerbsQuizRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/verbs': typeof VerbsRouteWithChildren
   '/api/graphql': typeof ApiGraphqlRoute
+  '/api/health': typeof ApiHealthRoute
   '/verbs/quiz': typeof VerbsQuizRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/verbs': typeof VerbsRouteWithChildren
   '/api/graphql': typeof ApiGraphqlRoute
+  '/api/health': typeof ApiHealthRoute
   '/verbs/quiz': typeof VerbsQuizRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/verbs'
     | '/api/graphql'
+    | '/api/health'
     | '/verbs/quiz'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/verbs'
     | '/api/graphql'
+    | '/api/health'
     | '/verbs/quiz'
     | '/api/auth/$'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/verbs'
     | '/api/graphql'
+    | '/api/health'
     | '/verbs/quiz'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   SignupRoute: typeof SignupRoute
   VerbsRoute: typeof VerbsRouteWithChildren
   ApiGraphqlRoute: typeof ApiGraphqlRoute
+  ApiHealthRoute: typeof ApiHealthRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
@@ -157,6 +170,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VerbsQuizRouteImport
       parentRoute: typeof VerbsRoute
     }
+    '/api/health': {
+      id: '/api/health'
+      path: '/api/health'
+      fullPath: '/api/health'
+      preLoaderRoute: typeof ApiHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/graphql': {
       id: '/api/graphql'
       path: '/api/graphql'
@@ -190,6 +210,7 @@ const rootRouteChildren: RootRouteChildren = {
   SignupRoute: SignupRoute,
   VerbsRoute: VerbsRouteWithChildren,
   ApiGraphqlRoute: ApiGraphqlRoute,
+  ApiHealthRoute: ApiHealthRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport

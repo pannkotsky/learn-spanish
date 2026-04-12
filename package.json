@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "vite dev --port 3000",
-    "prepare": "prek install",
+    "prek:install": "prek install",
     "ts": "tsc --noEmit",
     "format": "biome format --write .",
     "format:check": "biome format .",
