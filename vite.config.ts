@@ -41,6 +41,9 @@ const config = defineConfig({
     tanstackStart(),
     viteReact(),
   ],
+  preview: {
+    allowedHosts: process.env.PUBLIC_DOMAIN ? [process.env.PUBLIC_DOMAIN] : undefined,
+  },
 })
 
 export default config
