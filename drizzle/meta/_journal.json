@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1775925413083,
+      "tag": "0000_square_the_liberteens",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1775928000000,
+      "tag": "0001_add_words_frequency",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1775934713510,
+      "tag": "0002_gray_venus",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1775997410326,
+      "tag": "0003_drop_infinitive_participle_paradigms",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1776002000000,
+      "tag": "0004_remove_legacy_verb_paradigm_rows",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+{
+  "id": "5b3dfb37-cc5f-43e0-9f7d-25c0d44a1be5",
+  "prevId": "8d4d49bc-fb82-46fe-a4c7-904781a246e6",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.verb_forms": {
+      "name": "verb_forms",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "word_id": {
+          "name": "word_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "paradigm": {
+          "name": "paradigm",
+          "type": "verb_paradigm",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "first_person_singular": {
+          "name": "first_person_singular",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "first_person_plural": {
+          "name": "first_person_plural",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "second_person_singular": {
+          "name": "second_person_singular",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "second_person_plural": {
+          "name": "second_person_plural",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "third_person_singular": {
+          "name": "third_person_singular",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "third_person_plural": {
+          "name": "third_person_plural",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "verb_forms_word_id_words_id_fk": {
+          "name": "verb_forms_word_id_words_id_fk",
+          "tableFrom": "verb_forms",
+          "tableTo": "words",
+          "columnsFrom": ["word_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "verb_forms_word_id_paradigm_unique": {
+          "name": "verb_forms_word_id_paradigm_unique",
+          "nullsNotDistinct": false,
+          "columns": ["word_id", "paradigm"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.words": {
+      "name": "words",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "mainForm": {
+          "name": "mainForm",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "word_class": {
+          "name": "word_class",
+          "type": "word_class",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "frequency": {
+          "name": "frequency",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "translationEn": {
+          "name": "translationEn",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "translationUa": {
+          "name": "translationUa",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.verb_paradigm": {
+      "name": "verb_paradigm",
+      "schema": "public",
+      "values": [
+        "indicative_present",
+        "indicative_preterite",
+        "indicative_imperfect",
+        "indicative_future",
+        "indicative_conditional",
+        "indicative_present_perfect",
+        "indicative_pluperfect",
+        "indicative_future_perfect",
+        "indicative_conditional_perfect",
+        "indicative_past_anterior",
+        "subjunctive_present",
+        "subjunctive_imperfect_ra",
+        "subjunctive_imperfect_se",
+        "subjunctive_future",
+        "subjunctive_present_perfect",
+        "subjunctive_pluperfect",
+        "imperative_affirmative",
+        "imperative_negative",
+        "gerund"
+      ]
+    },
+    "public.word_class": {
+      "name": "word_class",
+      "schema": "public",
+      "values": [
+        "noun",
+        "verb",
+        "adjective",
+        "adverb",
+        "pronoun",
+        "preposition",
+        "conjunction",
+        "article",
+        "determiner",
+        "numeral",
+        "interjection",
+        "auxiliary",
+        "particle",
+        "other"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

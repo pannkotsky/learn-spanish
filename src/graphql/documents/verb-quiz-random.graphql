@@ -1,0 +1,19 @@
+query VerbQuizRandomVerb($paradigm: VerbParadigm!) {
+  verbs(search: null) {
+    totalCount
+    results(ordering: RANDOM, limit: 1, offset: 0) {
+      id
+      mainForm
+      translationEn
+      forms(paradigms: [$paradigm]) {
+        paradigm
+        firstPersonSingular
+        firstPersonPlural
+        secondPersonSingular
+        secondPersonPlural
+        thirdPersonSingular
+        thirdPersonPlural
+      }
+    }
+  }
+}

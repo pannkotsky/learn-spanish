@@ -1,0 +1,21 @@
+# https://prek.j178.dev/configuration/
+# Install hooks: `pnpm install` (prepare) or `pnpm exec prek install`
+
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+id = "typescript"
+name = "TypeScript (tsc --noEmit)"
+language = "system"
+entry = "pnpm ts"
+pass_filenames = false
+always_run = true
+
+[[repos.hooks]]
+id = "biome-check"
+name = "Biome check (format + assist; fails if formatting would change files)"
+language = "system"
+entry = "pnpm biome:check"
+pass_filenames = false
+always_run = true

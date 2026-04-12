@@ -1,0 +1,105 @@
+enum WordClass {
+  noun
+  verb
+  adjective
+  adverb
+  pronoun
+  preposition
+  conjunction
+  article
+  determiner
+  numeral
+  interjection
+  auxiliary
+  particle
+  other
+}
+
+enum VerbParadigm {
+  indicative_present
+  indicative_preterite
+  indicative_imperfect
+  indicative_future
+  indicative_conditional
+  indicative_present_perfect
+  indicative_pluperfect
+  indicative_future_perfect
+  indicative_conditional_perfect
+  indicative_past_anterior
+  subjunctive_present
+  subjunctive_imperfect_ra
+  subjunctive_imperfect_se
+  subjunctive_future
+  subjunctive_present_perfect
+  subjunctive_pluperfect
+  imperative_affirmative
+  imperative_negative
+  gerund
+}
+
+interface Word {
+  id: ID!
+  mainForm: String!
+  wordClass: WordClass!
+  translationEn: String!
+  translationUa: String!
+  createdAt: String
+  updatedAt: String
+}
+
+type NonVerbWord implements Word {
+  id: ID!
+  mainForm: String!
+  wordClass: WordClass!
+  translationEn: String!
+  translationUa: String!
+  createdAt: String
+  updatedAt: String
+}
+
+type Verb implements Word {
+  id: ID!
+  mainForm: String!
+  wordClass: WordClass!
+  translationEn: String!
+  translationUa: String!
+  createdAt: String
+  updatedAt: String
+  """
+  When `paradigms` is omitted or null, all paradigms are returned.
+  When `paradigms` is an empty list, no forms are returned.
+  """
+  forms(paradigms: [VerbParadigm!]): [VerbForm!]!
+}
+
+enum WordsOrdering {
+  FREQUENCY_DESC
+  MAIN_FORM_ASC
+  """
+  Uniform random row order (use with small `limit`, e.g. quiz).
+  """
+  RANDOM
+}
+
+type VerbsPage {
+  totalCount: Int!
+  results(ordering: WordsOrdering = FREQUENCY_DESC, limit: Int = 25, offset: Int = 0): [Verb!]!
+}
+
+type VerbForm {
+  id: ID!
+  paradigm: VerbParadigm!
+  firstPersonSingular: String!
+  firstPersonPlural: String!
+  secondPersonSingular: String!
+  secondPersonPlural: String!
+  thirdPersonSingular: String!
+  thirdPersonPlural: String!
+  createdAt: String
+  updatedAt: String
+}
+
+type Query {
+  word(id: ID!): Word
+  verbs(search: String): VerbsPage!
+}

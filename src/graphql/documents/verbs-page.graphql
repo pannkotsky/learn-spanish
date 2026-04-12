@@ -1,0 +1,24 @@
+query VerbsPage(
+  $search: String
+  $offset: Int!
+  $ordering: WordsOrdering!
+  $paradigms: [VerbParadigm!]
+) {
+  verbs(search: $search) {
+    totalCount
+    results(ordering: $ordering, limit: 25, offset: $offset) {
+      id
+      mainForm
+      translationEn
+      forms(paradigms: $paradigms) {
+        paradigm
+        firstPersonSingular
+        firstPersonPlural
+        secondPersonSingular
+        secondPersonPlural
+        thirdPersonSingular
+        thirdPersonPlural
+      }
+    }
+  }
+}
