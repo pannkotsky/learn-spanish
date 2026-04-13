@@ -1,41 +1,67 @@
 # Learn Spanish
 
-TanStack Start app for browsing Spanish **verb lemmas** with conjugation tables and a **conjugation quiz** (`/verbs`, `/verbs/quiz`). Data comes from **PostgreSQL** via **Drizzle** and a small **GraphQL** API (`/api/graphql`).
+App for browsing Spanish **verbs** with conjugation tables and a **conjugation quiz**.
 
-## Getting started
+## Tech stack
+
+This repo uses:
+
+- **TanStack Start** (file-based routes, generated `src/routeTree.gen.ts`)
+- **Apollo Server** and **Apollo Client** (with `@apollo/client-integration-tanstack-start` for the router)
+- **PostgreSQL** via **Drizzle ORM**
+- **Better Auth** for authentication
+- **Tailwind CSS** v4 and **daisyUI** v5 for styling (`src/styles.css`)
+
+For router/Start/plugin details, use **`AGENTS.md`** (Intent skill paths) and the  docs.
+
+## Running the app locally
+
+- Install dependencies
 
 ```bash
 pnpm install
-pnpm dev
 ```
 
-Dev server: **http://localhost:3000** (see `package.json`).
+- Set up a Postgres database
 
-## Build and checks
+- Copy **`.env.example`** → **`.env.local`** (never commit secrets)
+
+- Set **`DATABASE_URL`** for Postgres in `.env.local`
+
+- Generate **`BETTER_AUTH_SECRET`** and add it to `.env.local`:
 
 ```bash
-pnpm build      # production build
-pnpm ts         # TypeScript (no emit)
-pnpm test       # Vitest
-pnpm format     # Biome (write)
-pnpm format:check
+pnpm dlx @better-auth/cli secret
 ```
 
-## Environment and database
-
-- Copy **`.env.example`** → **`.env.local`** (never commit secrets).
-- Set **`DATABASE_URL`** for Postgres (Drizzle + optional Better Auth persistence).
+- Run database migrations
 
 ```bash
-pnpm db:push              # apply schema from src/db/schema.ts (dev)
-# or
-pnpm db:generate && pnpm db:migrate
+pnpm db:migrate
 ```
 
-Seed verb lemmas and conjugation rows (after DB is up):
+- Seed base database data
 
 ```bash
 pnpm db:seed
+```
+
+- Run dev server
+
+```bash
+pnpm dev
+```
+
+The app is now available at **http://localhost:3000**
+
+## Main scripts
+
+```bash
+pnpm build        # production build
+pnpm ts           # TypeScript
+pnpm test         # Vitest
+pnpm format       # Biome
+pnpm db:generate  # Generate database migrations after changing DB schema
 ```
 
 ## GraphQL
@@ -60,23 +86,3 @@ Generated types and document nodes: `src/graphql/__generated__/graphql.ts`.
 | `/login`, `/signup` | Auth screens |
 | `/api/graphql` | GraphQL POST endpoint |
 | `/api/auth/*` | Better Auth |
-
-## Styling
-
-**Tailwind CSS** v4 and **daisyUI** v5 (`src/styles.css`).
-
-## Better Auth
-
-1. Generate **`BETTER_AUTH_SECRET`** and add it to `.env.local`:
-
-   ```bash
-   pnpm dlx @better-auth/cli secret
-   ```
-
-2. See [Better Auth docs](https://www.better-auth.com) for providers, database-backed sessions, etc.
-
-Optional DB wiring example is in the scaffold comments; this README keeps only the secret step here.
-
-## TanStack stack
-
-This repo uses **TanStack Start**, **TanStack Router** (file-based routes, generated `src/routeTree.gen.ts`), and **Apollo Client** (with `@apollo/client-integration-tanstack-start` for the router). For router/Start/plugin details, use **`AGENTS.md`** (Intent skill paths) and the [TanStack Start](https://tanstack.com/start) docs.
