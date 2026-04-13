@@ -24,7 +24,7 @@ permissions:
 
 jobs:
   deploy:
-  environment: learn-spanish / production
+    environment: learn-spanish / production
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
