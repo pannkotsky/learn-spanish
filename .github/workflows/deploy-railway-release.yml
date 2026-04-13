@@ -1,0 +1,44 @@
+# Blueprint: deploy to Railway when a GitHub Release is published (not on every push to main).
+#
+# Setup:
+# - In Railway, disable GitHub auto-deploy for the production service you want gated on releases
+#   (Service → Settings → disconnect the repo), or keep auto-deploy only on a non-production service.
+# - In GitHub: Settings → Secrets and variables → Actions — add:
+#   - RAILWAY_TOKEN — Railway project token (https://docs.railway.com/integrations/api#project-token)
+#   - RAILWAY_SERVICE_ID — target service UUID or exact service name (https://docs.railway.com/cli/up)
+# - If `railway up` errors about project/environment scope, add flags per CLI docs, e.g.
+#   --project <project-id> --environment <name>
+
+name: Deploy to Railway (release)
+
+on:
+  release:
+    types: [published]
+
+concurrency:
+  group: railway-release-deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy tagged release to Railway
+        run: railway up --ci --detach -y --service "${{ secrets.RAILWAY_SERVICE_ID }}"
