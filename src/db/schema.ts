@@ -9,6 +9,8 @@ import {
   unique,
 } from 'drizzle-orm/pg-core'
 
+export * from './auth-schema'
+
 /** PostgreSQL enum `word_class` — parts of speech for vocabulary entries. */
 export const wordClassEnum = pgEnum('word_class', [
   'noun',

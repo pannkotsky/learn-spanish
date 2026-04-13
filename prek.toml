@@ -19,3 +19,13 @@ language = "system"
 entry = "pnpm biome:check"
 pass_filenames = false
 always_run = true
+
+[[repos]]
+repo = "https://github.com/pre-commit/pre-commit-hooks"
+rev = "v5.0.0"
+
+[[repos.hooks]]
+id = "end-of-file-fixer"
+
+[[repos.hooks]]
+id = "trailing-whitespace"
