@@ -36,8 +36,21 @@ export default function AppFooter() {
             Terms of use
           </Link>
         </div>
-        <p className="m-0 text-center text-base-content/60">
-          © {new Date().getFullYear()} Valerii Kovalchuk
+        <p className="m-0 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-center text-base-content/60">
+          <span>© {new Date().getFullYear()} Valerii Kovalchuk</span>
+          <span className="hidden sm:inline" aria-hidden>
+            ·
+          </span>
+          <span>Version {__APP_VERSION__}</span>
+          <span className="hidden sm:inline" aria-hidden>
+            ·
+          </span>
+          <Link
+            to="/changelog"
+            className="rounded-sm text-base-content/60 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-base-content/40"
+          >
+            Changelog
+          </Link>
         </p>
       </div>
     </footer>

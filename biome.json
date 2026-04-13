@@ -11,6 +11,7 @@
       "!!**/dist",
       "!!**/drizzle/meta",
       "!!**/src/graphql/__generated__",
+      "!!**/src/generated",
       "!!**/src/routeTree.gen.ts",
       "!!**/src/db/data/es_50k.txt"
     ]

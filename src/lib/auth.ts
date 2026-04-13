@@ -6,7 +6,11 @@ import { db } from '#/db'
 
 export const auth = betterAuth({
   appName: 'Learn Spanish',
-  baseUrl: process.env.VITE_APP_URL ?? process.env.APP_URL ?? 'http://localhost:3000',
+  baseURL:
+    process.env.BETTER_AUTH_URL ??
+    process.env.VITE_APP_URL ??
+    process.env.APP_URL ??
+    'http://localhost:3000',
   database: drizzleAdapter(db, {
     provider: 'pg',
   }),

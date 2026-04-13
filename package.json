@@ -7,7 +7,10 @@
     "#/*": "./src/*"
   },
   "scripts": {
+    "build:changelog": "tsx scripts/build-changelog-html.ts",
     "dev": "vite dev --port 3000",
+    "prebuild": "pnpm build:changelog",
+    "predev": "pnpm build:changelog && pnpm codegen",
     "prek:install": "prek install",
     "ts": "tsc --noEmit",
     "format": "biome check . --write",
@@ -70,6 +73,7 @@
     "daisyui": "^5.5.19",
     "dotenv": "^17.3.1",
     "jsdom": "^28.1.0",
+    "marked": "^18.0.0",
     "tsx": "^4.21.0",
     "typescript": "^5.7.2",
     "vite": "^8.0.0",

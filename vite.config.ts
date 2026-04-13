@@ -9,6 +9,9 @@ import type { Plugin } from 'vite'
 import { defineConfig } from 'vite'
 
 const projectDir = path.dirname(fileURLToPath(import.meta.url))
+const pkg = JSON.parse(fs.readFileSync(path.join(projectDir, 'package.json'), 'utf8')) as {
+  version: string
+}
 
 /** TanStack Start emits `from './router.tsx'`; strip to extensionless imports. */
 function stripRouteTreeGenImportExtensions(): Plugin {
@@ -30,6 +33,9 @@ function stripRouteTreeGenImportExtensions(): Plugin {
 }
 
 const config = defineConfig({
+  define: {
+    __APP_VERSION__: JSON.stringify(pkg.version),
+  },
   resolve: { tsconfigPaths: true },
   plugins: [
     stripRouteTreeGenImportExtensions(),

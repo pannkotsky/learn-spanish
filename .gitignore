@@ -1,4 +1,7 @@
 node_modules
+
+# Generated from CHANGELOG.md by `pnpm build:changelog`
+src/generated/
 .DS_Store
 dist
 dist-ssr
