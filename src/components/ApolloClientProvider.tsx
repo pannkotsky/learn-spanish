@@ -1,5 +1,5 @@
 import { ApolloProvider } from '@apollo/client/react'
-import { useState, type ReactNode } from 'react'
+import { type ReactNode, useState } from 'react'
 
 import { makeApolloClient } from '#/graphql/apollo-client'
 

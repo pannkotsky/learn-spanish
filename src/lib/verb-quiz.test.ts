@@ -5,8 +5,8 @@ import { PERSON_ROWS } from '#/lib/verb-matrix'
 import {
   normalizeVerbAnswer,
   pickVerbQuizQuestionFromFetchedVerb,
-  verbAnswersMatch,
   type VerbQuizVerb,
+  verbAnswersMatch,
 } from './verb-quiz'
 
 describe('normalizeVerbAnswer + verbAnswersMatch', () => {

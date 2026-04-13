@@ -1,8 +1,8 @@
 import type { VerbsPageQuery } from '#/graphql/__generated__/graphql'
 import {
-  type PersonKey,
-  PERSON_ROWS,
   formatParadigmTitle,
+  PERSON_ROWS,
+  type PersonKey,
   type VerbFormFields,
 } from '#/lib/verb-matrix'
 

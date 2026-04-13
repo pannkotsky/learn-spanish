@@ -1,18 +1,17 @@
 import { eq } from 'drizzle-orm'
 
-import { words, type VerbParadigm } from '#/db/schema'
-
+import { type VerbParadigm, words } from '#/db/schema'
 import type { GqlContext } from '#/graphql/context'
-import { ALL_PARADIGMS } from '#/lib/verb-matrix'
-import { mapWordToGraphql } from '#/graphql/word-types'
 import {
   sanitizeSearch,
+  type VerbsPageParent,
   verbsListWhere,
+  type WordsOrderingGql,
   wordsCountSelection,
   wordsOrderByClauses,
-  type VerbsPageParent,
-  type WordsOrderingGql,
 } from '#/graphql/verbs-query'
+import { mapWordToGraphql } from '#/graphql/word-types'
+import { ALL_PARADIGMS } from '#/lib/verb-matrix'
 
 function isoMaybe(value: Date | null | undefined): string | null {
   if (value == null) return null

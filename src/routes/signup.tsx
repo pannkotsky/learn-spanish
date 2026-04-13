@@ -1,4 +1,4 @@
-import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useState } from 'react'
 
 import { authClient } from '#/lib/auth-client'
@@ -8,7 +8,6 @@ export const Route = createFileRoute('/signup')({
 })
 
 function SignupPage() {
-  const navigate = useNavigate()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -29,7 +28,7 @@ function SignupPage() {
         setError(signError.message ?? 'Could not sign up')
         return
       }
-      await navigate({ to: '/' })
+      window.location.assign('/')
     } catch {
       setError('Something went wrong')
     } finally {

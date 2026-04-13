@@ -7,8 +7,9 @@
  * `verb_forms` rows for current verbs, then inserts full paradigms again.
  * Without `--refresh`, only missing `(word_id, paradigm)` rows are inserted.
  */
-import { config } from 'dotenv'
+
 import { Conjugator } from '@jirimracek/conjugate-esp'
+import { config } from 'dotenv'
 import { eq, inArray } from 'drizzle-orm'
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { Pool } from 'pg'

@@ -1,12 +1,12 @@
 import { useQuery } from '@apollo/client/react'
-import { Link, Outlet, createFileRoute, useNavigate, useRouterState } from '@tanstack/react-router'
+import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from '@tanstack/react-router'
 import { useEffect, useMemo, useState } from 'react'
 
 import { VerbFormsMatrix } from '#/components/VerbFormsMatrix'
 import { VerbParadigmsSelector } from '#/components/VerbParadigmsSelector'
 import {
-  VerbsPageDocument,
   type VerbParadigm,
+  VerbsPageDocument,
   type VerbsPageQuery,
   type VerbsPageQueryVariables,
   type WordsOrdering,
@@ -17,8 +17,8 @@ import {
   paradigmsFromParam,
   paradigmsGraphqlVariable,
   paradigmsToParam,
-  validateVerbsUrlSearch,
   type VerbsUrlSearch,
+  validateVerbsUrlSearch,
 } from '#/lib/verbs-url-search'
 
 const PAGE_SIZE = 25

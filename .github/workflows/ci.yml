@@ -1,4 +1,4 @@
-name: CI
+name: Code quality
 
 on:
   push:
@@ -32,8 +32,8 @@ jobs:
       - name: TypeScript
         run: pnpm ts
 
-      - name: Biome
-        run: pnpm biome:check
+      - name: Format check
+        run: pnpm format:check
 
       - name: Tests
         run: pnpm test

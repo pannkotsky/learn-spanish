@@ -1,28 +1,28 @@
 import { NetworkStatus } from '@apollo/client'
 import { useQuery } from '@apollo/client/react'
-import { Link, createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { VerbParadigmsSelector } from '#/components/VerbParadigmsSelector'
 import {
-  VerbQuizRandomVerbDocument,
   type VerbParadigm,
+  VerbQuizRandomVerbDocument,
   type VerbQuizRandomVerbQuery,
 } from '#/graphql/__generated__/graphql'
 import { ALL_PARADIGMS, formatParadigmTitle } from '#/lib/verb-matrix'
 import {
-  type VerbQuizAttempt,
-  type VerbQuizQuestion,
   pickVerbQuizQuestionFromFetchedVerb,
   randomParadigmFromSelection,
+  type VerbQuizAttempt,
+  type VerbQuizQuestion,
   verbAnswersMatch,
 } from '#/lib/verb-quiz'
 import {
   orderedParadigmsFromSelection,
   paradigmsFromParam,
   paradigmsToParam,
-  validateVerbsUrlSearch,
   type VerbsUrlSearch,
+  validateVerbsUrlSearch,
 } from '#/lib/verbs-url-search'
 
 type VerbRow = VerbQuizRandomVerbQuery['verbs']['results'][number]

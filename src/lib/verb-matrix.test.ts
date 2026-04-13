@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { verbParadigmEnum } from '#/db/schema'
 
-import { ALL_PARADIGMS, VERB_PARADIGM_LABELS_ES, formatParadigmTitle } from './verb-matrix'
+import { ALL_PARADIGMS, formatParadigmTitle, VERB_PARADIGM_LABELS_ES } from './verb-matrix'
 
 describe('VERB_PARADIGM_LABELS_ES', () => {
   it('covers every schema paradigm exactly once', () => {

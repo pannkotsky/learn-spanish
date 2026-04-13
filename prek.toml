@@ -13,10 +13,10 @@ pass_filenames = false
 always_run = true
 
 [[repos.hooks]]
-id = "biome-check"
-name = "Biome check (format + assist; fails if formatting would change files)"
+id = "format-check"
+name = "Format check (fails if formatting would change files)"
 language = "system"
-entry = "pnpm biome:check"
+entry = "pnpm format:check"
 pass_filenames = false
 always_run = true
 

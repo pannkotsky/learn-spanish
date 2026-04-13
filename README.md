@@ -79,4 +79,4 @@ Optional DB wiring example is in the scaffold comments; this README keeps only t
 
 ## TanStack stack
 
-This repo uses **TanStack Start**, **TanStack Router** (file-based routes, generated `src/routeTree.gen.ts`), and **TanStack Query** in router context. For router/Start/plugin details, use **`AGENTS.md`** (Intent skill paths) and the [TanStack Start](https://tanstack.com/start) docs.
+This repo uses **TanStack Start**, **TanStack Router** (file-based routes, generated `src/routeTree.gen.ts`), and **Apollo Client** (with `@apollo/client-integration-tanstack-start` for the router). For router/Start/plugin details, use **`AGENTS.md`** (Intent skill paths) and the [TanStack Start](https://tanstack.com/start) docs.

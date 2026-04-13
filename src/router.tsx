@@ -1,16 +1,17 @@
+import { routerWithApolloClient } from '@apollo/client-integration-tanstack-start'
 import {
   createRouter as createTanStackRouter,
   defaultStringifySearch,
 } from '@tanstack/react-router'
-import { routeTree } from './routeTree.gen'
 
-import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
+import { makeApolloClient } from '#/graphql/apollo-client'
 import {
   isVerbsUrlSearchRecord,
   validateVerbsUrlSearch,
   verbSearchToMinimalQuery,
 } from '#/lib/verbs-url-search'
-import { getContext } from './integrations/tanstack-query/root-provider'
+
+import { routeTree } from './routeTree.gen'
 
 function stringifySearch(search: Record<string, unknown>): string {
   if (!search || typeof search !== 'object') {
@@ -29,7 +30,8 @@ function stringifySearch(search: Record<string, unknown>): string {
 }
 
 export function getRouter() {
-  const context = getContext()
+  const apolloClient = makeApolloClient()
+  const context = routerWithApolloClient.defaultContext
 
   const router = createTanStackRouter({
     routeTree,
@@ -40,9 +42,7 @@ export function getRouter() {
     stringifySearch,
   })
 
-  setupRouterSsrQueryIntegration({ router, queryClient: context.queryClient })
-
-  return router
+  return routerWithApolloClient(router, apolloClient)
 }
 
 declare module '@tanstack/react-router' {

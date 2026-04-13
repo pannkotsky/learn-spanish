@@ -1,6 +1,5 @@
 import type { VerbParadigm } from '#/graphql/__generated__/graphql'
-
-import { ALL_PARADIGMS, type PersonKey, PERSON_ROWS, formatParadigmTitle } from '#/lib/verb-matrix'
+import { ALL_PARADIGMS, formatParadigmTitle, PERSON_ROWS, type PersonKey } from '#/lib/verb-matrix'
 
 export type VerbQuizVerb = {
   id: string

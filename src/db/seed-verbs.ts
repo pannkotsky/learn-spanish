@@ -17,8 +17,9 @@
  *
  * Then run `pnpm db:seed-verb-forms` for new lemmas without `verb_forms` rows.
  */
-import { config } from 'dotenv'
+
 import { Conjugator } from '@jirimracek/conjugate-esp'
+import { config } from 'dotenv'
 import { and, eq } from 'drizzle-orm'
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { Pool } from 'pg'

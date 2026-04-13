@@ -1,5 +1,5 @@
-import { HeaderMap } from '@apollo/server'
 import type { HTTPGraphQLRequest, HTTPGraphQLResponse } from '@apollo/server'
+import { HeaderMap } from '@apollo/server'
 
 export async function fetchRequestToHttpGraphQLRequest(
   request: Request,

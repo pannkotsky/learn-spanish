@@ -9,9 +9,9 @@ import {
   paradigmsGraphqlVariable,
   paradigmsParamFromRaw,
   paradigmsToParam,
+  VERBS_SEARCH_DEFAULTS,
   validateVerbsUrlSearch,
   verbSearchToMinimalQuery,
-  VERBS_SEARCH_DEFAULTS,
 } from '#/lib/verbs-url-search'
 
 describe('ALL_PARADIGMS', () => {

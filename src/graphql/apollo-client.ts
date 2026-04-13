@@ -1,4 +1,5 @@
-import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client'
+import { HttpLink } from '@apollo/client'
+import { ApolloClient, InMemoryCache } from '@apollo/client-integration-tanstack-start'
 
 function graphqlHttpUri() {
   if (typeof window !== 'undefined') {
@@ -21,7 +22,6 @@ export function makeApolloClient() {
         Word: ['Verb', 'NonVerbWord'],
       },
     }),
-    ssrMode: !isBrowser,
     devtools: {
       enabled: import.meta.env.DEV && isBrowser,
       name: 'Learn Spanish',

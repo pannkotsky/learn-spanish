@@ -24,7 +24,7 @@ npx @tanstack/cli@latest create learn-spanish \
 | Framework | **TanStack Start** + **React** 19 |
 | Routing | TanStack Router (file-based, generated route tree) |
 | Styling | **Tailwind CSS** v4 (`@tailwindcss/vite`) + **daisyUI** v5 (`@plugin "daisyui"` in `src/styles.css`; themes `light` / `dark` + system) |
-| Data fetching | **Apollo Client** (`@apollo/client`) for GraphQL UI; **TanStack Query** still in router context (`src/routes/__root.tsx`) |
+| Data fetching | **Apollo Client** (`@apollo/client`) for GraphQL UI; **`@apollo/client-integration-tanstack-start`** for router SSR integration (`src/router.tsx`, `src/routes/__root.tsx`) |
 | API | **GraphQL** — schema `src/graphql/schema.graphql`, handler `src/routes/api/graphql.ts`, documents `src/graphql/documents/`, codegen `pnpm codegen` → `src/graphql/__generated__/graphql.ts` |
 | Database | **Local PostgreSQL** via `DATABASE_URL` + Drizzle (`drizzle-orm/node-postgres`) |
 | ORM | **Drizzle** + `drizzle-kit` (`db:*` scripts in `package.json`) |
@@ -85,7 +85,7 @@ See `.env.example` and `.env.local` (local only; never commit secrets).
 
 ## Architectural decisions (from scaffold)
 
-- **Router context** includes `QueryClient` (`MyRouterContext` in `src/routes/__root.tsx`) for TanStack Query integration.
+- **Router context** is typed for **Apollo** (`ApolloClientIntegration.RouterContext` in `src/routes/__root.tsx`).
 - **Vite plugin order** (current): `devtools()` → `tailwindcss()` → `tanstackStart()` → `viteReact()`. Devtools skill requires devtools **first**; `tanstackStart()` wraps Start + router codegen — keep ordering aligned with shipped skills when editing.
 - Auth API catch-all: `src/routes/api/auth/$.ts`.
 

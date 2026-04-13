@@ -1,16 +1,28 @@
-import { HeadContent, Link, Scripts, createRootRouteWithContext } from '@tanstack/react-router'
+import type { ApolloClientIntegration } from '@apollo/client-integration-tanstack-start'
+import { createRootRouteWithContext, HeadContent, Link, Scripts } from '@tanstack/react-router'
+import { createServerFn } from '@tanstack/react-start'
+import { getRequestHeaders } from '@tanstack/react-start/server'
+
+import { auth } from '#/lib/auth'
+import { AuthUserProvider } from '#/lib/auth-user-context'
 
 import { ApolloClientProvider } from '../components/ApolloClientProvider'
 import AppNavbar from '../components/AppNavbar'
 import appCss from '../styles.css?url'
 
-import type { QueryClient } from '@tanstack/react-query'
+type MyRouterContext = ApolloClientIntegration.RouterContext
 
-interface MyRouterContext {
-  queryClient: QueryClient
-}
+const getSessionServerFn = createServerFn({ method: 'GET' }).handler(() =>
+  auth.api.getSession({
+    headers: getRequestHeaders(),
+  }),
+)
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
+  loader: async () => {
+    const session = await getSessionServerFn()
+    return { session }
+  },
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
@@ -38,6 +50,8 @@ function NotFound() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const { session } = Route.useLoaderData()
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -45,8 +59,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="flex min-h-dvh flex-col bg-base-200 text-base-content antialiased">
         <ApolloClientProvider>
-          <AppNavbar />
-          <div className="flex flex-1 flex-col">{children}</div>
+          <AuthUserProvider user={session?.user}>
+            <AppNavbar />
+            <div className="flex flex-1 flex-col">{children}</div>
+          </AuthUserProvider>
         </ApolloClientProvider>
         <Scripts />
       </body>
