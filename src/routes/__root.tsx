@@ -7,6 +7,7 @@ import { auth } from '#/lib/auth'
 import { AuthUserProvider } from '#/lib/auth-user-context'
 
 import { ApolloClientProvider } from '../components/ApolloClientProvider'
+import AppFooter from '../components/AppFooter'
 import AppNavbar from '../components/AppNavbar'
 import appCss from '../styles.css?url'
 
@@ -27,6 +28,11 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     meta: [
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {
+        name: 'description',
+        content:
+          'Practice Spanish verb conjugations: browse a filterable verb list with tense columns, or take a quiz on random forms.',
+      },
       { title: 'Learn Spanish' },
     ],
     links: [{ rel: 'stylesheet', href: appCss }],
@@ -62,6 +68,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           <AuthUserProvider user={session?.user}>
             <AppNavbar />
             <div className="flex flex-1 flex-col">{children}</div>
+            <AppFooter />
           </AuthUserProvider>
         </ApolloClientProvider>
         <Scripts />

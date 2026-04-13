@@ -13,10 +13,10 @@ pass_filenames = false
 always_run = true
 
 [[repos.hooks]]
-id = "format-check"
-name = "Format check (fails if formatting would change files)"
+id = "format"
+name = "Format check (fails if formatting changes files, fixes formatting)"
 language = "system"
-entry = "pnpm format:check"
+entry = "pnpm format"
 pass_filenames = false
 always_run = true
 
