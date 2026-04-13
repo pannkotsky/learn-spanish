@@ -27,7 +27,7 @@ export default function AppFooter() {
             Open an issue on GitHub
           </a>
         </div>
-        <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 sm:justify-start">
+        <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
           <Link to="/privacy" className="link link-hover font-medium text-base-content">
             Privacy
           </Link>
