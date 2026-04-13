@@ -39,7 +39,7 @@ const config = defineConfig({
     viteReact(),
   ],
   preview: {
-    allowedHosts: process.env.PUBLIC_DOMAIN ? [process.env.PUBLIC_DOMAIN] : undefined,
+    allowedHosts: process.env.ALLOWED_HOSTS ? process.env.ALLOWED_HOSTS.split(',') : undefined,
   },
 })
 
