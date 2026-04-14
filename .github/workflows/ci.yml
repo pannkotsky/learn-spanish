@@ -29,11 +29,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
 
-      - name: TypeScript
-        run: pnpm ts
+      - name: Build changelog
+        run: pnpm build:changelog
 
       - name: Format check
         run: pnpm format:check
+
+      - name: TypeScript
+        run: pnpm ts
 
       - name: Tests
         run: pnpm test
