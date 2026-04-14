@@ -1,7 +1,7 @@
 import { NetworkStatus } from '@apollo/client'
 import { useQuery } from '@apollo/client/react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { VerbParadigmsSelector } from '#/components/VerbParadigmsSelector'
 import {
@@ -62,6 +62,7 @@ function VerbQuizPage() {
   const [answer, setAnswer] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [lastCorrect, setLastCorrect] = useState<boolean | null>(null)
+  const answerInputRef = useRef<HTMLInputElement | null>(null)
 
   const applyQuestionFromVerb = useCallback((verb: VerbRow | undefined) => {
     const q = pickVerbQuizQuestionFromFetchedVerb(verb)
@@ -77,6 +78,11 @@ function VerbQuizPage() {
     if (verbs.length === 0) return
     applyQuestionFromVerb(verbs[0] as VerbRow | undefined)
   }, [loading, phase, question, verbs, applyQuestionFromVerb])
+
+  useEffect(() => {
+    if (phase !== 'active' || question == null) return
+    answerInputRef.current?.focus()
+  }, [phase, question])
 
   const fetchAndApplyVerb = useCallback(async () => {
     const paradigm = randomParadigmFromSelection(columnParadigms)
@@ -309,12 +315,13 @@ function VerbQuizPage() {
             </div>
           </header>
           <p className="text-base leading-relaxed">
-            Give the <span className="font-medium">{question.paradigmLabel}</span> form for{' '}
-            <span className="font-medium">{question.personLabel}</span>.
+            Give the <span className="font-medium italic">{question.paradigmLabel}</span> form for{' '}
+            <span className="font-medium italic">{question.personLabel}</span>.
           </p>
           <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
             <div className="flex flex-wrap items-center gap-2">
               <input
+                ref={answerInputRef}
                 type="text"
                 className={`input input-bordered min-w-0 flex-1 basis-48 ${submitted ? 'cursor-default' : ''}`}
                 value={answer}

@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Footer shows the app version next to the copyright and links to a `/changelog` page.
 - Changelog page.
 
+### Changed
+
+- Minor UI improvements for quiz.
+
 ## [0.1.0] - 2026-04-13
 
 ### Added
