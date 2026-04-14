@@ -3,7 +3,8 @@ import { Mail } from 'lucide-react'
 
 import { contactEmail } from '#/lib/contact-email'
 
-const GITHUB_NEW_ISSUE_URL = 'https://github.com/pannkotsky/learn-spanish/issues/new'
+const GITHUB_NEW_ISSUE_URL =
+  'https://github.com/pannkotsky/learn-spanish/issues/new?template=bug_report.md'
 
 export default function AppFooter() {
   return (
