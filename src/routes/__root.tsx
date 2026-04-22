@@ -5,8 +5,9 @@ import { getRequestHeaders } from '@tanstack/react-start/server'
 
 import { auth } from '#/lib/auth'
 import { AuthUserProvider } from '#/lib/auth-user-context'
+import { getThemeServerFn, inlineThemeScript } from '#/lib/theme'
+import { ThemeProvider } from '#/lib/theme-context'
 
-import { ApolloClientProvider } from '../components/ApolloClientProvider'
 import AppFooter from '../components/AppFooter'
 import AppNavbar from '../components/AppNavbar'
 import appCss from '../styles.css?url'
@@ -21,8 +22,8 @@ const getSessionServerFn = createServerFn({ method: 'GET' }).handler(() =>
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   loader: async () => {
-    const session = await getSessionServerFn()
-    return { session }
+    const [session, theme] = await Promise.all([getSessionServerFn(), getThemeServerFn()])
+    return { session, theme }
   },
   head: () => ({
     meta: [
@@ -56,21 +57,22 @@ function NotFound() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const { session } = Route.useLoaderData()
+  const { session, theme } = Route.useLoaderData()
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme={theme ?? undefined} suppressHydrationWarning>
       <head>
+        {theme === null ? <script dangerouslySetInnerHTML={{ __html: inlineThemeScript }} /> : null}
         <HeadContent />
       </head>
       <body className="flex min-h-dvh flex-col bg-base-200 text-base-content antialiased">
-        <ApolloClientProvider>
+        <ThemeProvider initialTheme={theme}>
           <AuthUserProvider user={session?.user}>
             <AppNavbar />
             <div className="flex flex-1 flex-col">{children}</div>
             <AppFooter />
           </AuthUserProvider>
-        </ApolloClientProvider>
+        </ThemeProvider>
         <Scripts />
       </body>
     </html>

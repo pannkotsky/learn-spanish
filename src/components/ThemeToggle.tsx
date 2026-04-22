@@ -1,43 +1,32 @@
 import { Moon, Sun } from 'lucide-react'
-import { useLayoutEffect, useState } from 'react'
 
-const STORAGE_KEY = 'learn-spanish-theme'
-
-export type ColorTheme = 'light' | 'dark'
-
-function readInitialTheme(): ColorTheme {
-  if (typeof window === 'undefined') return 'light'
-  const stored = localStorage.getItem(STORAGE_KEY)
-  if (stored === 'light' || stored === 'dark') return stored
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-}
+import { useTheme } from '#/lib/theme-context'
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<ColorTheme>(readInitialTheme)
+  const { theme, resolvedTheme, toggleTheme } = useTheme()
 
-  useLayoutEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme)
-    try {
-      localStorage.setItem(STORAGE_KEY, theme)
-    } catch {
-      /* ignore quota / private mode */
-    }
-  }, [theme])
-
-  const next = theme === 'dark' ? 'light' : 'dark'
+  // theme === null means the server had no cookie and the inline script resolved
+  // data-theme from OS preference. Omit the icon on the first render so server
+  // HTML and client hydration match; the mount effect will then set it.
+  const showIcon = theme !== null
+  const isDark = resolvedTheme === 'dark'
 
   return (
     <button
       type="button"
       className="btn btn-ghost btn-circle btn-sm"
-      aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-      title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
-      onClick={() => setTheme(next)}
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      title={isDark ? 'Light mode' : 'Dark mode'}
+      onClick={toggleTheme}
     >
-      {theme === 'dark' ? (
-        <Sun className="size-5 opacity-90" aria-hidden />
+      {showIcon ? (
+        isDark ? (
+          <Sun className="size-5 opacity-90" aria-hidden />
+        ) : (
+          <Moon className="size-5 opacity-90" aria-hidden />
+        )
       ) : (
-        <Moon className="size-5 opacity-90" aria-hidden />
+        <span className="size-5" aria-hidden />
       )}
     </button>
   )
