@@ -1,6 +1,6 @@
-import { useQuery } from '@apollo/client/react'
+import { useSuspenseQuery } from '@apollo/client/react'
 import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from '@tanstack/react-router'
-import { useEffect, useMemo, useState } from 'react'
+import { Suspense, useDeferredValue, useEffect, useMemo, useState } from 'react'
 
 import { VerbFormsMatrix } from '#/components/VerbFormsMatrix'
 import { VerbParadigmsSelector } from '#/components/VerbParadigmsSelector'
@@ -11,6 +11,7 @@ import {
   type VerbsPageQueryVariables,
   type WordsOrdering,
 } from '#/graphql/__generated__/graphql'
+import { useDelayedFlag } from '#/lib/hooks/use-delayed-flag'
 import { ALL_PARADIGMS, formatParadigmTitle } from '#/lib/verb-matrix'
 import {
   orderedParadigmsFromSelection,
@@ -36,9 +37,122 @@ function VerbsShell() {
   return <VerbsPage />
 }
 
+function usePatchSearch() {
+  const navigate = useNavigate({ from: '/verbs' })
+
+  return (patch: Partial<VerbsUrlSearch>) => {
+    navigate({
+      search: (prev: VerbsUrlSearch) => ({ ...prev, ...patch }),
+      replace: true,
+    })
+  }
+}
+
+function VerbsList() {
+  const url = Route.useSearch()
+  const patchSearch = usePatchSearch()
+
+  const offset = url.page * PAGE_SIZE
+  const columnParadigms = useMemo(() => paradigmsFromParam(url.paradigms), [url.paradigms])
+
+  const paradigmsVariable = useMemo((): VerbParadigm[] | null => {
+    return paradigmsGraphqlVariable(columnParadigms)
+  }, [columnParadigms])
+
+  const variables = useMemo(
+    (): VerbsPageQueryVariables => ({
+      search: url.search.length > 0 ? url.search : null,
+      offset,
+      ordering: url.ordering,
+      paradigms: paradigmsVariable ?? undefined,
+    }),
+    [offset, paradigmsVariable, url.ordering, url.search],
+  )
+
+  const deferredVariables = useDeferredValue(variables)
+  const isStale = deferredVariables !== variables
+
+  const showStale = useDelayedFlag(isStale)
+
+  const { data, error } = useSuspenseQuery<VerbsPageQuery, VerbsPageQueryVariables>(
+    VerbsPageDocument,
+    {
+      variables: deferredVariables,
+    },
+  )
+
+  const totalCount = data?.verbs?.totalCount ?? 0
+  const verbs = useMemo(() => data?.verbs?.results ?? [], [data?.verbs?.results])
+
+  const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE))
+  const canPrev = url.page > 0
+  const canNext = (url.page + 1) * PAGE_SIZE < totalCount
+  return (
+    <>
+      {error ? (
+        <div role="alert" className="alert alert-error">
+          <span>{error.message}</span>
+        </div>
+      ) : null}
+
+      <div
+        aria-busy={isStale}
+        className={`flex flex-col gap-8 transition-opacity ${
+          showStale ? 'pointer-events-none opacity-60' : 'opacity-100'
+        }`}
+      >
+        {verbs.map((verb) => (
+          <article key={verb.id} className="card border border-base-300 bg-base-100 shadow-sm">
+            <div className="card-body gap-4">
+              <header className="border-b border-base-200 pb-3">
+                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <h2 className="card-title text-2xl">{verb.mainForm}</h2>
+                  <span className="text-base font-normal text-base-content/80">
+                    {verb.translationEn}
+                  </span>
+                </div>
+              </header>
+              <VerbFormsMatrix verb={verb} columnParadigms={columnParadigms} />
+            </div>
+          </article>
+        ))}
+      </div>
+
+      {verbs.length === 0 ? (
+        <div className="alert alert-info">
+          <span>No verbs match this search.</span>
+        </div>
+      ) : null}
+
+      <div className="join flex justify-center border-t border-base-200 pt-4">
+        <button
+          type="button"
+          className="join-item btn btn-outline"
+          disabled={!canPrev}
+          onClick={() => patchSearch({ page: Math.max(0, url.page - 1) })}
+        >
+          Previous
+        </button>
+        <button type="button" className="join-item btn btn-disabled no-animation">
+          Page {url.page + 1} of {totalPages}
+        </button>
+        <button
+          type="button"
+          className="join-item btn btn-outline"
+          disabled={!canNext}
+          onClick={() => patchSearch({ page: url.page + 1 })}
+        >
+          Next
+        </button>
+      </div>
+    </>
+  )
+}
+
 function VerbsPage() {
   const url = Route.useSearch()
   const navigate = useNavigate({ from: '/verbs' })
+  const patchSearch = usePatchSearch()
 
   const [searchInput, setSearchInput] = useState(url.search)
 
@@ -64,44 +178,6 @@ function VerbsPage() {
   const columnParadigms = useMemo(() => paradigmsFromParam(url.paradigms), [url.paradigms])
 
   const selectedSet = useMemo(() => new Set<string>(columnParadigms), [columnParadigms])
-
-  const offset = url.page * PAGE_SIZE
-
-  const paradigmsVariable = useMemo((): VerbParadigm[] | null => {
-    return paradigmsGraphqlVariable(columnParadigms)
-  }, [columnParadigms])
-
-  const variables = useMemo(
-    (): VerbsPageQueryVariables => ({
-      search: url.search.length > 0 ? url.search : null,
-      offset,
-      ordering: url.ordering,
-      paradigms: paradigmsVariable ?? undefined,
-    }),
-    [offset, paradigmsVariable, url.ordering, url.search],
-  )
-
-  const { data, loading, error } = useQuery<VerbsPageQuery, VerbsPageQueryVariables>(
-    VerbsPageDocument,
-    {
-      variables,
-      notifyOnNetworkStatusChange: true,
-    },
-  )
-
-  const totalCount = data?.verbs?.totalCount ?? 0
-  const verbs = useMemo(() => data?.verbs?.results ?? [], [data?.verbs?.results])
-
-  const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE))
-  const canPrev = url.page > 0
-  const canNext = (url.page + 1) * PAGE_SIZE < totalCount
-
-  function patchSearch(patch: Partial<VerbsUrlSearch>) {
-    navigate({
-      search: (prev: VerbsUrlSearch) => ({ ...prev, ...patch }),
-      replace: true,
-    })
-  }
 
   function toggleParadigm(p: string) {
     const next = new Set(selectedSet)
@@ -183,63 +259,15 @@ function VerbsPage() {
         </div>
       </div>
 
-      {error ? (
-        <div role="alert" className="alert alert-error">
-          <span>{error.message}</span>
-        </div>
-      ) : null}
-
-      {loading && !data ? (
-        <div className="flex justify-center py-16">
-          <span className="loading loading-lg loading-spinner text-primary" />
-        </div>
-      ) : null}
-
-      <div className="flex flex-col gap-8">
-        {verbs.map((verb) => (
-          <article key={verb.id} className="card border border-base-300 bg-base-100 shadow-sm">
-            <div className="card-body gap-4">
-              <header className="border-b border-base-200 pb-3">
-                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <h2 className="card-title text-2xl">{verb.mainForm}</h2>
-                  <span className="text-base font-normal text-base-content/80">
-                    {verb.translationEn}
-                  </span>
-                </div>
-              </header>
-              <VerbFormsMatrix verb={verb} columnParadigms={columnParadigms} />
-            </div>
-          </article>
-        ))}
-      </div>
-
-      {!loading && verbs.length === 0 ? (
-        <div className="alert alert-info">
-          <span>No verbs match this search.</span>
-        </div>
-      ) : null}
-
-      <div className="join flex justify-center border-t border-base-200 pt-4">
-        <button
-          type="button"
-          className="join-item btn btn-outline"
-          disabled={!canPrev || loading}
-          onClick={() => patchSearch({ page: Math.max(0, url.page - 1) })}
-        >
-          Previous
-        </button>
-        <button type="button" className="join-item btn btn-disabled no-animation">
-          Page {url.page + 1} of {totalPages}
-        </button>
-        <button
-          type="button"
-          className="join-item btn btn-outline"
-          disabled={!canNext || loading}
-          onClick={() => patchSearch({ page: url.page + 1 })}
-        >
-          Next
-        </button>
-      </div>
+      <Suspense
+        fallback={
+          <div className="flex justify-center py-16">
+            <span className="loading loading-lg loading-spinner text-primary" />
+          </div>
+        }
+      >
+        <VerbsList />
+      </Suspense>
     </main>
   )
 }
