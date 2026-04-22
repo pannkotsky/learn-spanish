@@ -11,7 +11,7 @@
     "dev": "vite dev --port 3000",
     "prebuild": "pnpm build:changelog",
     "predev": "pnpm build:changelog && pnpm codegen",
-    "prek:install": "prek install",
+    "prek:install": "prek install --refresh",
     "ts": "tsc --noEmit",
     "format": "biome check . --write",
     "format:check": "biome check .",
@@ -35,14 +35,14 @@
     "@better-auth/drizzle-adapter": "^1.6.2",
     "@jirimracek/conjugate-esp": "^2.3.6",
     "@tailwindcss/vite": "^4.1.18",
-    "@tanstack/react-devtools": "latest",
-    "@tanstack/react-router": "latest",
-    "@tanstack/react-router-devtools": "latest",
-    "@tanstack/react-start": "latest",
+    "@tanstack/react-devtools": "^0.10.2",
+    "@tanstack/react-router": "^1.168.23",
+    "@tanstack/react-router-devtools": "^1.166.13",
+    "@tanstack/react-start": "^1.167.42",
     "@tanstack/router-plugin": "^1.132.0",
-    "better-auth": "^1.5.3",
+    "better-auth": "^1.6.5",
     "dataloader": "^2.2.3",
-    "drizzle-kit": "^0.31.9",
+    "drizzle-kit": "^0.31.10",
     "drizzle-orm": "^0.45.1",
     "graphql": "^16.13.2",
     "graphql-tag": "^2.12.6",
@@ -54,18 +54,18 @@
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.11",
-    "@graphql-codegen/cli": "^6.2.1",
+    "@biomejs/biome": "^2.4.12",
+    "@graphql-codegen/cli": "^6.3.1",
     "@graphql-codegen/typed-document-node": "^6.1.7",
     "@graphql-codegen/typescript": "^5.0.9",
     "@graphql-codegen/typescript-operations": "^5.0.9",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@j178/prek": "^0.3.9",
     "@tailwindcss/typography": "^0.5.16",
-    "@tanstack/devtools-vite": "latest",
+    "@tanstack/devtools-vite": "^0.6.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/react": "^16.3.0",
-    "@types/node": "^22.10.2",
+    "@types/node": "^25.6.0",
     "@types/pg": "^8.15.6",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
@@ -73,7 +73,7 @@
     "daisyui": "^5.5.19",
     "dotenv": "^17.3.1",
     "jsdom": "^28.1.0",
-    "marked": "^18.0.0",
+    "marked": "^18.0.2",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2",
     "vite": "^8.0.0",
@@ -83,6 +83,10 @@
     "onlyBuiltDependencies": [
       "esbuild",
       "lightningcss"
-    ]
-  }
+    ],
+    "overrides": {
+      "@tanstack/router-core": "1.168.15"
+    }
+  },
+  "packageManager": "pnpm@10.33.1+sha512.05ba3c1d5d1c18f68df06470d74055e62d41fc110a0c660db1b2dfb2785327f04cf0f68345d4609bc52089e7fa0343c31593b2f9594e2c5d5da426230acc9820"
 }
