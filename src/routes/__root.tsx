@@ -5,6 +5,7 @@ import { getRequestHeaders } from '@tanstack/react-start/server'
 
 import { auth } from '#/lib/auth'
 import { AuthUserProvider } from '#/lib/auth-user-context'
+import { canonicalUrlFromMatches, getSiteOrigin, SITE_DESCRIPTION } from '#/lib/site-url'
 import { getThemeServerFn, inlineThemeScript } from '#/lib/theme'
 import { ThemeProvider } from '#/lib/theme-context'
 
@@ -25,19 +26,41 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     const [session, theme] = await Promise.all([getSessionServerFn(), getThemeServerFn()])
     return { session, theme }
   },
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      {
-        name: 'description',
-        content:
-          'Practice Spanish verb conjugations: browse a filterable verb list with tense columns, or take a quiz on random forms.',
-      },
-      { title: 'Learn Spanish' },
-    ],
-    links: [{ rel: 'stylesheet', href: appCss }],
-  }),
+  head: (ctx) => {
+    const canonicalUrl = canonicalUrlFromMatches(ctx.matches)
+    const ogImage = `${getSiteOrigin()}/logo512.png`
+    return {
+      meta: [
+        { charSet: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'theme-color', media: '(prefers-color-scheme: light)', content: '#f2f2f2' },
+        { name: 'theme-color', media: '(prefers-color-scheme: dark)', content: '#191e24' },
+        { name: 'description', content: SITE_DESCRIPTION },
+        { property: 'og:url', content: canonicalUrl },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:title', content: 'Learn Spanish' },
+        { property: 'og:description', content: SITE_DESCRIPTION },
+        { property: 'og:image', content: ogImage },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:image', content: ogImage },
+        { name: 'twitter:title', content: 'Learn Spanish' },
+        { name: 'twitter:description', content: SITE_DESCRIPTION },
+        { name: 'mobile-web-app-capable', content: 'yes' },
+        { name: 'apple-mobile-web-app-capable', content: 'yes' },
+        { name: 'apple-mobile-web-app-title', content: 'Learn Spanish' },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
+        { title: 'Learn Spanish' },
+      ],
+      links: [
+        { rel: 'stylesheet', href: appCss },
+        { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
+        { rel: 'alternate icon', href: '/favicon.ico' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+        { rel: 'manifest', href: '/manifest.json' },
+        { rel: 'canonical', href: canonicalUrl },
+      ],
+    }
+  },
   shellComponent: RootDocument,
   notFoundComponent: NotFound,
 })

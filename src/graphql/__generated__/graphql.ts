@@ -151,7 +151,6 @@ export type VerbQuizRandomVerbQuery = {
   __typename: 'Query'
   verbs: {
     __typename: 'VerbsPage'
-    totalCount: number
     results: Array<{
       __typename: 'Verb'
       id: string
@@ -235,7 +234,6 @@ export const VerbQuizRandomVerbDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'results' },
