@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 
 import { contactEmail } from '#/lib/contact-email'
 
-const LAST_UPDATED = 'April 13, 2026'
+const LAST_UPDATED = 'April 23, 2026'
 
 export const Route = createFileRoute('/privacy')({
   component: PrivacyPage,
@@ -45,9 +45,10 @@ function PrivacyPage() {
               IP address, browser type, and timestamps) for security, debugging, and reliability.
             </li>
             <li>
-              <strong className="font-medium text-base-content">Local storage.</strong> Your browser
-              may store preferences (for example, display settings) only on your device unless we
-              say otherwise.
+              <strong className="font-medium text-base-content">Cookies and local storage.</strong>{' '}
+              We currently use limited first-party browser storage to run core features: an
+              authentication/session cookie (when you log in) and a theme preference cookie
+              (`light`/`dark`, up to 12 months). We do not use this storage for advertising.
             </li>
           </ul>
         </section>
@@ -58,6 +59,16 @@ function PrivacyPage() {
             We use the above to provide and secure the Service, operate accounts where you use them,
             fix problems, and comply with the law. We do not use your data for third-party
             advertising in this minimal setup.
+          </p>
+        </section>
+
+        <section className="flex flex-col gap-2">
+          <h2 className="text-lg font-semibold text-base-content">Cookie choices</h2>
+          <p className="m-0">
+            The cookies we currently set are used only for strictly necessary functionality (account
+            authentication and your chosen theme). Where applicable law requires consent for
+            non-essential cookies or similar technologies, we will request consent before enabling
+            them and provide a way to withdraw that consent.
           </p>
         </section>
 
