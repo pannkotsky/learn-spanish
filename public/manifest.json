@@ -1,25 +1,92 @@
 {
-  "short_name": "TanStack App",
-  "name": "Create TanStack App Sample",
+  "id": "/",
+  "name": "Learn Spanish",
+  "short_name": "LS",
+  "description": "Practice Spanish verb conjugations: browse a filterable verb list with tense columns, or take a quiz on random forms.",
+  "lang": "en",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#f2f2f2",
+  "background_color": "#f2f2f2",
+  "categories": ["education"],
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "/logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
     },
     {
-      "src": "logo192.png",
+      "src": "/logo512.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "512x512",
+      "purpose": "any"
     },
     {
-      "src": "logo512.png",
+      "src": "/logo512-maskable.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "maskable"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-verbs-light.png",
+      "type": "image/png",
+      "sizes": "1416x816",
+      "form_factor": "wide",
+      "label": "Browse verbs with full conjugation tables"
+    },
+    {
+      "src": "/screenshots/desktop-verbs-dark.png",
+      "type": "image/png",
+      "sizes": "1416x816",
+      "form_factor": "wide",
+      "label": "Browse verbs with full conjugation tables"
+    },
+    {
+      "src": "/screenshots/desktop-verbs-quiz-light.png",
+      "type": "image/png",
+      "sizes": "1416x816",
+      "form_factor": "wide",
+      "label": "Practice verb conjugations with a quiz"
+    },
+    {
+      "src": "/screenshots/desktop-verbs-quiz-dark.png",
+      "type": "image/png",
+      "sizes": "1416x816",
+      "form_factor": "wide",
+      "label": "Practice verb conjugations with a quiz"
+    },
+    {
+      "src": "/screenshots/mobile-verbs-light.png",
+      "type": "image/png",
+      "sizes": "430x932",
+      "form_factor": "narrow",
+      "label": "Browse verbs with full conjugation tables"
+    },
+    {
+      "src": "/screenshots/mobile-verbs-dark.png",
+      "type": "image/png",
+      "sizes": "430x932",
+      "form_factor": "narrow",
+      "label": "Browse verbs with full conjugation tables"
+    },
+    {
+      "src": "/screenshots/mobile-verbs-quiz-light.png",
+      "type": "image/png",
+      "sizes": "430x932",
+      "form_factor": "narrow",
+      "label": "Practice verb conjugations with a quiz"
+    },
+    {
+      "src": "/screenshots/mobile-verbs-quiz-dark.png",
+      "type": "image/png",
+      "sizes": "430x932",
+      "form_factor": "narrow",
+      "label": "Practice verb conjugations with a quiz"
+    }
+  ]
 }

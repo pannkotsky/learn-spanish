@@ -8,7 +8,8 @@ function graphqlHttpUri() {
   if (typeof window !== 'undefined') {
     return graphqlPath
   }
-  const base = process.env.VITE_APP_URL ?? process.env.APP_URL ?? 'http://localhost:3000'
+  const defaultPort = process.env.PORT ?? (process.env.NODE_ENV === 'production' ? 4173 : 3000)
+  const base = process.env.VITE_APP_URL ?? process.env.APP_URL ?? `http://localhost:${defaultPort}`
   return `${base.replace(/\/$/, '')}${graphqlPath}`
 }
 

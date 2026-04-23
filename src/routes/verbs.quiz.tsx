@@ -179,7 +179,7 @@ function VerbQuizPage() {
     )
   }
 
-  if (!loading && (data?.verbs?.totalCount ?? 0) === 0) {
+  if (!loading && verbs.length === 0) {
     return (
       <main className="mx-auto flex w-full max-w-2xl flex-col gap-4 p-4 md:p-6">
         <div className="alert alert-info">
@@ -298,10 +298,6 @@ function VerbQuizPage() {
             triggerAriaLabel="Select tenses for the quiz"
             listboxAriaLabel="Select tenses for the quiz"
           />
-          <p className="text-xs text-base-content/60">
-            Only checked tenses are used. Changing the selection loads a new random verb for the
-            next question.
-          </p>
         </div>
       </div>
       <div className="card border border-base-300 bg-base-100 shadow-sm">
@@ -386,13 +382,6 @@ function VerbQuizPage() {
           </div>
         </div>
       </div>
-      <p className="text-xs text-base-content/50">
-        Each prompt loads one random verb and only one tense column from the server. Person is
-        chosen in the browser.
-        {data?.verbs?.totalCount != null
-          ? ` (${data.verbs.totalCount} verbs in the database.)`
-          : null}
-      </p>
     </main>
   )
 }

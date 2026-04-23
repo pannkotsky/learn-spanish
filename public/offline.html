@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f2f2f2" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#191e24" />
+    <title>Offline — Learn Spanish</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #f2f2f2;
+        --fg: #111;
+        --muted: rgba(0, 0, 0, 0.65);
+        --border: rgba(0, 0, 0, 0.2);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #191e24;
+          --fg: #eaeaea;
+          --muted: rgba(255, 255, 255, 0.7);
+          --border: rgba(255, 255, 255, 0.25);
+        }
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        background: var(--bg);
+        color: var(--fg);
+        padding: 1.5rem;
+      }
+      main {
+        max-width: 28rem;
+        text-align: center;
+      }
+      img {
+        width: 64px;
+        height: 64px;
+        margin-bottom: 1rem;
+      }
+      h1 {
+        margin: 0 0 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+      p {
+        margin: 0.25rem 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+      button {
+        margin-top: 1.5rem;
+        padding: 0.5rem 1.25rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 500;
+      }
+      button:hover { border-color: currentColor; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img src="/favicon.svg" alt="" aria-hidden="true" />
+      <h1>You're offline</h1>
+      <p>Learn Spanish needs a connection to load this page.</p>
+      <p>Check your network, then try again.</p>
+      <button type="button" onclick="location.reload()">Retry</button>
+    </main>
+  </body>
+</html>
