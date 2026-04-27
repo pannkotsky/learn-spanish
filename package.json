@@ -35,7 +35,7 @@
     "@apollo/server": "^5.5.0",
     "@better-auth/drizzle-adapter": "^1.6.2",
     "@jirimracek/conjugate-esp": "^2.3.6",
-    "@tailwindcss/vite": "^4.1.18",
+    "@tailwindcss/vite": "^4.2.4",
     "@tanstack/react-devtools": "^0.10.2",
     "@tanstack/react-router": "^1.168.23",
     "@tanstack/react-router-devtools": "^1.166.13",
