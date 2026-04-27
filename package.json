@@ -30,7 +30,7 @@
     "codegen": "graphql-codegen --config codegen.ts && pnpm biome format src/graphql/__generated__/graphql.ts --write"
   },
   "dependencies": {
-    "@apollo/client": "^4.1.7",
+    "@apollo/client": "^4.1.9",
     "@apollo/client-integration-tanstack-start": "0.14.5-rc.0",
     "@apollo/server": "^5.5.0",
     "@better-auth/drizzle-adapter": "^1.6.2",
